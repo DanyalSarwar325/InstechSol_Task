@@ -12,7 +12,11 @@ export async function GET(req: Request) {
     if (id) {
       // Return single ticket
       const ticket = await Ticket.findById(id);
-      if (!ticket) return NextResponse.json({ error: "Ticket not found" }, { status: 404 });
+      if (!ticket)
+        return NextResponse.json(
+          { error: "Ticket not found" },
+          { status: 404 }
+        );
       return NextResponse.json(ticket, { status: 200 });
     }
 
