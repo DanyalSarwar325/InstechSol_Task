@@ -8,7 +8,6 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 export default function ViewTicketsPage() {
   const [tickets, setTickets] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
   const router = useRouter();
 
   // Fetch tickets from API
@@ -106,32 +105,78 @@ export default function ViewTicketsPage() {
         {tickets.length === 0 ? (
           <p className="text-center text-gray-600">No tickets found.</p>
         ) : (
-          <div className="overflow-x-auto">
-            {/* 👈 Added table-fixed class to prevent layout shifting */}
-            <table className="w-full border border-gray-200 rounded-lg table-fixed">
-              <thead>
-                <tr className="bg-blue-900 text-white">
-                  {/* 👈 Set widths to control column size and stability */}
-                  <th className="py-3 px-4 text-left w-1/5">Title</th>
-                  <th className="py-3 px-4 text-left w-2/5">Description</th>
-                  <th className="py-3 px-4 text-left w-[10%]">Priority</th>
-                  <th className="py-3 px-4 text-left w-[20%]">Created At</th>
-                  <th className="py-3 px-4 text-center w-[15%]">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tickets.map((ticket) => (
-                  <tr
-                    key={ticket._id}
-                    className="border-b hover:bg-blue-50 transition"
-                  >
-                    <td className="py-3 px-4 truncate">{ticket.title}</td>
-                    {/* 👈 Ensure long description text wraps */}
-                    <td className="py-3 px-4 text-sm whitespace-normal break-words">
-                      {ticket.description}
-                    </td>
-                    <td
-                      className={`py-3 px-4 font-medium ${
+          <>
+            {/* ✅ TABLE VIEW (Desktop & Tablets) */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full border border-gray-200 rounded-lg table-fixed">
+                <thead>
+                  <tr className="bg-blue-900 text-white">
+                    <th className="py-3 px-4 text-left w-1/5">Title</th>
+                    <th className="py-3 px-4 text-left w-2/5">Description</th>
+                    <th className="py-3 px-4 text-left w-[10%]">Priority</th>
+                    <th className="py-3 px-4 text-left w-[20%]">Created At</th>
+                    <th className="py-3 px-4 text-center w-[15%]">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tickets.map((ticket) => (
+                    <tr
+                      key={ticket._id}
+                      className="border-b hover:bg-blue-50 transition"
+                    >
+                      <td className="py-3 px-4 truncate">{ticket.title}</td>
+                      <td className="py-3 px-4 text-sm whitespace-normal break-words">
+                        {ticket.description}
+                      </td>
+                      <td
+                        className={`py-3 px-4 font-medium ${
+                          ticket.priority === "High"
+                            ? "text-red-600"
+                            : ticket.priority === "Medium"
+                            ? "text-yellow-600"
+                            : "text-green-600"
+                        }`}
+                      >
+                        {ticket.priority}
+                      </td>
+                      <td className="py-3 px-4 text-sm">
+                        {new Date(ticket.createdAt).toLocaleString()}
+                      </td>
+                      <td className="py-3 px-4 text-center space-x-3">
+                        <button
+                          onClick={() => router.push(`/edit-ticket/${ticket._id}`)}
+                          className="text-gray-400 hover:text-gray-600 p-1 transition-colors"
+                          title="Edit Ticket"
+                        >
+                          <FaEdit size={20} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(ticket._id)}
+                          className="text-gray-400 hover:text-gray-600 p-1 transition-colors"
+                          title="Delete Ticket"
+                        >
+                          <FaTrashAlt size={20} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* ✅ CARD VIEW (Mobile) */}
+            <div className="md:hidden grid grid-cols-1 gap-4">
+              {tickets.map((ticket) => (
+                <div
+                  key={ticket._id}
+                  className="bg-white border border-gray-200 rounded-xl shadow-sm p-4"
+                >
+                  <div className="flex justify-between items-center mb-2">
+                    <h2 className="font-semibold text-lg text-blue-800">
+                      {ticket.title}
+                    </h2>
+                    <span
+                      className={`text-sm font-medium ${
                         ticket.priority === "High"
                           ? "text-red-600"
                           : ticket.priority === "Medium"
@@ -140,36 +185,34 @@ export default function ViewTicketsPage() {
                       }`}
                     >
                       {ticket.priority}
-                    </td>
-                    <td className="py-3 px-4 text-sm">
-                      {new Date(ticket.createdAt).toLocaleString()}
-                    </td>
-                    <td className="py-3 px-4 text-center space-x-3">
+                    </span>
+                  </div>
+
+                  <p className="text-gray-700 text-sm mb-3 break-words">
+                    {ticket.description}
+                  </p>
+
+                  <div className="flex justify-between items-center text-sm text-gray-600">
+                    <span>{new Date(ticket.createdAt).toLocaleString()}</span>
+                    <div className="flex space-x-3">
                       <button
-                        onClick={() =>
-                          router.push(`/edit-ticket/${ticket._id}`)
-                        }
-                        // Use light grey icon styling
-                        className="text-gray-400 hover:text-gray-600 p-1 transition-colors"
-                        title="Edit Ticket"
+                        onClick={() => router.push(`/edit-ticket/${ticket._id}`)}
+                        className="text-gray-500 hover:text-blue-700"
                       >
-                        <FaEdit size={20} /> {/* 👈 Removed 'Edit' text */}
+                        <FaEdit size={18} />
                       </button>
                       <button
                         onClick={() => handleDelete(ticket._id)}
-                        // Use light grey icon styling
-                        className="text-gray-400 hover:text-gray-600 p-1 transition-colors"
-                        title="Delete Ticket"
+                        className="text-gray-500 hover:text-red-600"
                       >
-                        <FaTrashAlt size={20} />{" "}
-                        {/* 👈 Removed 'Delete' text */}
+                        <FaTrashAlt size={18} />
                       </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </section>
