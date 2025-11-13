@@ -144,22 +144,23 @@ export default function EditTicketPage() {
           </div>
 
           {/* Buttons */}
-          <div className="flex justify-between items-center pt-6">
-            <button
-              type="button"
-              onClick={() => router.push("/view-tickets")}
-              className="px-5 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300 transition"
-            >
-              Cancel
-            </button>
+<div className="flex justify-between items-center pt-6">
+  <button
+    type="button"
+    onClick={() => router.push("/view-tickets")}
+    className="px-5 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300 transition"
+  >
+    Cancel
+  </button>
 
-            <button
-              type="submit"
-              className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
-            >
-              Update Ticket
-            </button>
-          </div>
+  <button
+    type="submit"
+    className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+  >
+    Update Ticket
+  </button>
+</div>
+
         </form>
       </div>
     </section>

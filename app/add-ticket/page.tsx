@@ -41,7 +41,7 @@ export default function AddTicketPage() {
     const loadingToast = toast.loading("Submitting ticket..."); // Show loading state
 
     try {
-      const res = await fetch("/api/tickets", {
+      const res = await fetch("/api/add-ticket", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
