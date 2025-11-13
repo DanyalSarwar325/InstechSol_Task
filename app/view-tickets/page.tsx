@@ -34,15 +34,15 @@ export default function ViewTicketsPage() {
 
       if (res.ok) {
         setTickets((prevTickets) => prevTickets.filter((t) => t._id !== id));
-        toast.success("✅ Ticket deleted successfully!", {
+        toast.success(" Ticket deleted successfully!", {
           id: loadingToastId,
         });
       } else {
-        toast.error("❌ Failed to delete ticket", { id: loadingToastId });
+        toast.error(" Failed to delete ticket", { id: loadingToastId });
       }
     } catch (error) {
       console.error("Deletion error:", error);
-      toast.error("❌ An error occurred while deleting the ticket", {
+      toast.error(" An error occurred while deleting the ticket", {
         id: loadingToastId,
       });
     }

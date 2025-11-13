@@ -18,7 +18,7 @@ export default function EditTicketPage() {
   });
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch ticket details
+  // Fetch ticket details
   useEffect(() => {
     // Only fetch if an ID is available
     if (!id) return; 
@@ -39,12 +39,12 @@ export default function EditTicketPage() {
     fetchTicket();
   }, [id]); // Depend on 'id'
 
-  // ✅ Handle form changes
+  //  Handle form changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setTicket({ ...ticket, [e.target.name]: e.target.value });
   };
 
-  // ✅ Update ticket
+  // Update ticket
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -60,7 +60,7 @@ export default function EditTicketPage() {
 
       if (res.ok) {
         // Replace alert with success toast and dismiss loading toast
-        toast.success("✅ Ticket updated successfully!", { id: loadingToastId });
+        toast.success(" Ticket updated successfully!", { id: loadingToastId });
         
         // Wait a moment for the user to see the toast, then redirect
         setTimeout(() => {
@@ -70,11 +70,11 @@ export default function EditTicketPage() {
         // Replace alert with error toast
         const errorText = await res.text();
         console.error("Update failed response:", errorText);
-        toast.error(`❌ Failed to update ticket: ${errorText || res.statusText}`, { id: loadingToastId });
+        toast.error(` Failed to update ticket: ${errorText || res.statusText}`, { id: loadingToastId });
       }
     } catch (err) {
       console.error("Error updating ticket:", err);
-      toast.error("❌ An unexpected error occurred.", { id: loadingToastId });
+      toast.error(" An unexpected error occurred.", { id: loadingToastId });
     }
   };
 

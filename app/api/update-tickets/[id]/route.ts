@@ -5,11 +5,11 @@ import Ticket from "@/app/models/ticket";
 
 export async function PUT(
   req: Request,
-  context: { params: Promise<{ id: string }> } // 👈 params is now a Promise
+  context: { params: Promise<{ id: string }> } //  params is now a Promise
 )  {
   try {
     await DbConnect();
-    const params = await context.params; // 👈 await the params here
+    const params = await context.params; //  await the params here
     const { id } =  params;
     console.log("Updating ticket with ID:", id);
     const data = await req.json();
